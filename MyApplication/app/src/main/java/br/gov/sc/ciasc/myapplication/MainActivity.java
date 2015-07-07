@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -16,6 +19,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText(this, "Teste do Toast", Toast.LENGTH_LONG).show();
+        LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayout);
+        for (int i = 0; i < 100; i++) {
+            TextView tv = new TextView(this);
+            tv.setText("Texto " + i);
+            ll.addView(tv);
+        }
     }
 
     @Override
