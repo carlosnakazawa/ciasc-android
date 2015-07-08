@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -42,6 +43,15 @@ public class MainActivity extends Activity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Toast.makeText(MainActivity.this, "Menu Listar", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
+        SubMenu subMenuOutros = menu.addSubMenu("Outros");
+        subMenuOutros.add("Sair").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(MainActivity.this, "Sair...", Toast.LENGTH_LONG).show();
                 return false;
             }
         });
