@@ -2,6 +2,7 @@ package br.gov.sc.ciasc.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +25,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent irParaSegundaTela = new Intent(MainActivity.this, SegundaTelaActivity.class);
+                irParaSegundaTela.putExtra("mensagem", "Opa");
                 startActivity(irParaSegundaTela);
             }
         });
@@ -35,6 +37,9 @@ public class MainActivity extends Activity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Toast.makeText(MainActivity.this, "Menu Cadastrar", Toast.LENGTH_LONG).show();
+                Uri uri = Uri.parse("http://www.google.com/");
+                Intent intencao = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intencao);
                 return false;
             }
         });
@@ -51,6 +56,7 @@ public class MainActivity extends Activity {
         subMenuOutros.add("Sair").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                finish();
                 Toast.makeText(MainActivity.this, "Sair...", Toast.LENGTH_LONG).show();
                 return false;
             }

@@ -10,3 +10,7 @@
 ### Grupo ###
 
 android-ciasc@googlegroups.com
+
+### Testes ###
+
+* http://robolectric.org/

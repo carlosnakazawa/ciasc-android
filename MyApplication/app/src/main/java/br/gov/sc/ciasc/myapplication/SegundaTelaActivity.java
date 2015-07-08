@@ -3,6 +3,7 @@ package br.gov.sc.ciasc.myapplication;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class SegundaTelaActivity extends Activity {
@@ -10,6 +11,11 @@ public class SegundaTelaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String texto = extras.getString("mensagem");
+            Toast.makeText(this, texto, Toast.LENGTH_LONG).show();
+        }
         setContentView(R.layout.activity_segunda_tela);
     }
 
