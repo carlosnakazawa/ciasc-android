@@ -44,10 +44,13 @@ public class MainActivity extends Activity {
             }
         });
 
-        menu.add("Listar").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        menu.add("Ligar").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(MainActivity.this, "Menu Listar", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Menu Ligar", Toast.LENGTH_LONG).show();
+                Uri uri = Uri.parse("tel:829734983");
+                Intent intencao = new Intent(Intent.ACTION_CALL, uri);
+                startActivity(intencao);
                 return false;
             }
         });
