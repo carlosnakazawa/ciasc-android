@@ -3,4 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_segunda_tela">SegundaTelaActivity</string>
+    <string name="segunda_tela">SegundaTela</string>
+    <string name="botao_avancar">Avançar</string>
 </resources>
