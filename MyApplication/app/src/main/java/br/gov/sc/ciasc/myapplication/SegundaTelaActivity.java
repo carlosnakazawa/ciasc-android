@@ -1,11 +1,8 @@
 package br.gov.sc.ciasc.myapplication;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 
 public class SegundaTelaActivity extends Activity {
@@ -19,36 +16,36 @@ public class SegundaTelaActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("MainActivity", "Entrou onStart...");
+        Log.d("SegundaTelaActivity", "Entrou onStart...");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("MainActivity", "Entrou onResume...");
+        Log.d("SegundaTelaActivity", "Entrou onResume...");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("MainActivity", "Entrou onPause...");
+        Log.d("SegundaTelaActivity", "Entrou onPause...");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("MainActivity", "Entrou onStop...");
+        Log.d("SegundaTelaActivity", "Entrou onStop...");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("MainActivity", "Entrou onRestart...");
+        Log.d("SegundaTelaActivity", "Entrou onRestart...");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("MainActivity", "Entrou onDestroy...");
+        Log.d("SegundaTelaActivity", "Entrou onDestroy...");
     }
 }

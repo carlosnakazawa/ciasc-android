@@ -2,16 +2,10 @@ package br.gov.sc.ciasc.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -30,12 +24,6 @@ public class MainActivity extends Activity {
                 startActivity(irParaSegundaTela);
             }
         });
-        /*LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayout);
-        for (int i = 0; i < 100; i++) {
-            TextView tv = new TextView(this);
-            tv.setText("Texto " + i);
-            ll.addView(tv);
-        }*/
     }
 
     @Override
