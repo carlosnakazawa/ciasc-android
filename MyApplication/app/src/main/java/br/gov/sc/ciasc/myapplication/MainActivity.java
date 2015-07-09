@@ -6,18 +6,22 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
 
     private static final int SELECIONAR_CONTATO = 1;
+
+    private static final String ESTADO_TEXTO = "ESTADO_TEXTO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +32,8 @@ public class MainActivity extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent irParaSegundaTela = new Intent(MainActivity.this, SegundaTelaActivity.class);
-                irParaSegundaTela.putExtra("mensagem", "Opa");
-                startActivity(irParaSegundaTela);
+                TextView tv = (TextView) findViewById(R.id.textView);
+                tv.setText("Novo Texto");
             }
         });
     }
@@ -98,6 +101,21 @@ public class MainActivity extends Activity {
 
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        TextView tv = (TextView) findViewById(R.id.textView);
+        outState.putString(ESTADO_TEXTO, tv.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        TextView tv = (TextView) findViewById(R.id.textView);
+        tv.setText(savedInstanceState.getString(ESTADO_TEXTO));
     }
 
     @Override
