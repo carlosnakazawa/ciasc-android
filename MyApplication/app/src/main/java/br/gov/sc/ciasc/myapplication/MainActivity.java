@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,22 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 TextView tv = (TextView) findViewById(R.id.textView);
                 tv.setText("Novo Texto");
+            }
+        });
+
+        NumberPicker np = (NumberPicker) findViewById(R.id.qtdePessoas);
+        np.setMinValue(10);
+        np.setMaxValue(20);
+        np.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int value) {
+                return String.valueOf(value * 10);
+            }
+        });
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
             }
         });
     }
