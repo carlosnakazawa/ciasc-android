@@ -2,8 +2,10 @@ package br.gov.sc.ciasc.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
+
+    private static final int SELECIONAR_CONTATO = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,8 @@ public class MainActivity extends Activity {
             public boolean onMenuItemClick(MenuItem item) {
                 Uri uri = Uri.parse("content://com.android.contacts/contacts");
                 Intent intencao = new Intent(Intent.ACTION_PICK, uri);
-                startActivity(intencao);
+                // pega o retorno em onActivityResult
+                startActivityForResult(intencao, SELECIONAR_CONTATO);
                 return false;
             }
         });
@@ -76,6 +81,23 @@ public class MainActivity extends Activity {
         });
 
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECIONAR_CONTATO) {
+                Uri uri = data.getData();
+                Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+                if (cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                        Toast.makeText(this, "Contato: " + name, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+        }
     }
 
     @Override
