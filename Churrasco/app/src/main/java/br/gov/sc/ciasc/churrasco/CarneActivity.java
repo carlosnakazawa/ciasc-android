@@ -3,10 +3,14 @@ package br.gov.sc.ciasc.churrasco;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import br.gov.sc.ciasc.churrasco.dto.ChurrascoDto;
 
 
 public class CarneActivity extends Activity {
@@ -21,6 +25,11 @@ public class CarneActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent irParaLinguica = new Intent(CarneActivity.this, LinguicaActivity.class);
+                EditText et = (EditText) findViewById(R.id.editText);
+                Log.d("CarneActivity", et.getText().toString());
+                ChurrascoDto dto = new ChurrascoDto();
+                dto.setCarne(Integer.parseInt(et.getText().toString()));
+                irParaLinguica.putExtra("DADOS", dto);
                 startActivity(irParaLinguica);
             }
         });

@@ -1,10 +1,12 @@
 package br.gov.sc.ciasc.churrasco;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import br.gov.sc.ciasc.churrasco.dto.ChurrascoDto;
 
 
 public class LinguicaActivity extends Activity {
@@ -13,6 +15,13 @@ public class LinguicaActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_linguica);
+
+        Bundle params = getIntent().getExtras();
+        if (params != null) {
+            ChurrascoDto dto = (ChurrascoDto) params.get("DADOS");
+            TextView tv = (TextView) findViewById(R.id.mostraCarne);
+            tv.setText(String.valueOf(dto.getCarne()));
+        }
     }
 
     @Override
