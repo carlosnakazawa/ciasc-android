@@ -55,6 +55,16 @@ public class MainActivity extends Activity {
             }
         });
 
+        menu.add("Contatos").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Uri uri = Uri.parse("content://com.android.contacts/contacts");
+                Intent intencao = new Intent(Intent.ACTION_PICK, uri);
+                startActivity(intencao);
+                return false;
+            }
+        });
+
         SubMenu subMenuOutros = menu.addSubMenu("Outros");
         subMenuOutros.add("Sair").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
