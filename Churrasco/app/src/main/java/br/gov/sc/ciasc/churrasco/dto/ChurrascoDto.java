@@ -7,6 +7,7 @@ public class ChurrascoDto implements Serializable {
     private int carne;
     private int linguica;
     private int refrigerante;
+    private int pessoa;
 
     public int getCarne() {
         return carne;
@@ -30,5 +31,18 @@ public class ChurrascoDto implements Serializable {
 
     public void setRefrigerante(int refrigerante) {
         this.refrigerante = refrigerante;
+    }
+
+    public int getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(int pessoa) {
+        this.pessoa = pessoa;
+    }
+
+    @Override
+    public String toString() {
+        return ((carne * pessoa) + "g carne\n") + (linguica * pessoa) + " linguiças\n" + (refrigerante * pessoa) + "ml refrigerante";
     }
 }

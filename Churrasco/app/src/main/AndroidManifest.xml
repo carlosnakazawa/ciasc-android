@@ -20,6 +20,18 @@
             android:name=".LinguicaActivity"
             android:label="@string/title_activity_linguica" >
         </activity>
+        <activity
+            android:name=".RefrigeranteActivity"
+            android:label="@string/title_activity_refrigerante" >
+        </activity>
+        <activity
+            android:name=".PessoaActivity"
+            android:label="@string/title_activity_pessoa" >
+        </activity>
+        <activity
+            android:name=".ResultadoActivity"
+            android:label="@string/title_activity_resultado" >
+        </activity>
     </application>
 
 </manifest>

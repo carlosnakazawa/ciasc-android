@@ -1,9 +1,13 @@
 package br.gov.sc.ciasc.churrasco;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import br.gov.sc.ciasc.churrasco.dto.ChurrascoDto;
@@ -11,38 +15,30 @@ import br.gov.sc.ciasc.churrasco.dto.ChurrascoDto;
 
 public class LinguicaActivity extends Activity {
 
+    private ChurrascoDto dto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_linguica);
 
+        NumberPicker numberLinguica = (NumberPicker) findViewById(R.id.numberLinguica);
+
+        numberLinguica.setMinValue(1);
+        numberLinguica.setMaxValue(10);
+
         Bundle params = getIntent().getExtras();
         if (params != null) {
-            ChurrascoDto dto = (ChurrascoDto) params.get("DADOS");
-            TextView tv = (TextView) findViewById(R.id.mostraCarne);
-            tv.setText(String.valueOf(dto.getCarne()));
+            dto = (ChurrascoDto) params.get("DADOS");
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_linguica, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void buttonNextClick(View view) {
+        Intent irParaRefri = new Intent(this, RefrigeranteActivity.class);
+        NumberPicker np = (NumberPicker) findViewById(R.id.numberLinguica);
+        Log.d("CarneActivity", String.valueOf(np.getValue()));
+        dto.setLinguica(np.getValue());
+        irParaRefri.putExtra("DADOS", dto);
+        startActivity(irParaRefri);
     }
 }

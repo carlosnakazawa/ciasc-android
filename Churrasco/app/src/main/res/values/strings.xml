@@ -5,4 +5,15 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_linguica">LinguicaActivity</string>
     <string name="general_next">Avançar</string>
+    <string name="title_activity_refrigerante">RefrigeranteActivity</string>
+    <string name="title_activity_pessoa">PessoaActivity</string>
+    <string name="title_activity_resultado">ResultadoActivity</string>
+    <string name="pergunta_carne">Quanto de carne cada pessoa irá consumir?</string>
+    <string name="pergunta_linguica">Quantas linguiças cada pessoa irá consumir?</string>
+    <string name="pergunta_refrigerante">Quantos ml de refrigerante cada pessoa irá consumir?</string>
+    <string name="pergunta_pessoa">Quantas pessoas vão a festa?</string>
+    <string name="general_gramas">gramas</string>
+    <string name="general_linguicas">linguiças</string>
+    <string name="general_refrigerante">mililitros</string>
+    <string name="general_pessoa">pessoas</string>
 </resources>

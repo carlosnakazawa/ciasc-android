@@ -3,9 +3,10 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".CarneActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="br.gov.sc.ciasc.churrasco.PessoaActivity">
 
-    <TextView android:text="@string/pergunta_carne" android:layout_width="wrap_content"
+    <TextView android:text="@string/pergunta_pessoa" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -23,17 +24,16 @@
     <NumberPicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/numberCarne"
+        android:id="@+id/numberPessoa"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/general_gramas"
+        android:text="@string/general_pessoa"
         android:id="@+id/textView"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/numberCarne"
-        android:layout_toEndOf="@+id/numberCarne" />
-
+        android:layout_toRightOf="@+id/numberPessoa"
+        android:layout_toEndOf="@+id/numberPessoa" />
 </RelativeLayout>
