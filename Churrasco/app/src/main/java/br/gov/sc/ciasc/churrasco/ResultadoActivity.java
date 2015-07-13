@@ -1,13 +1,17 @@
 package br.gov.sc.ciasc.churrasco;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import br.gov.sc.ciasc.churrasco.dto.ChurrascoDto;
 
 
 public class ResultadoActivity extends Activity {
+
+    private ChurrascoDto dto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +20,7 @@ public class ResultadoActivity extends Activity {
 
         Bundle params = getIntent().getExtras();
         if (params != null) {
-            ChurrascoDto dto = (ChurrascoDto) params.get("DADOS");
+            dto = (ChurrascoDto) params.get("DADOS");
             TextView titulo = (TextView) findViewById(R.id.textViewTitulo);
             titulo.setText("Festa para " + dto.getPessoa() + " pessoas");
             TextView resultado = (TextView) findViewById(R.id.textViewResultado);
@@ -24,4 +28,11 @@ public class ResultadoActivity extends Activity {
         }
     }
 
+    public void buttonShareClick(View view) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, dto.toString());
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+    }
 }
