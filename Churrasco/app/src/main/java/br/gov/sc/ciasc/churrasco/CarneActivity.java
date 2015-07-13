@@ -32,6 +32,9 @@ public class CarneActivity extends Activity {
         numberCarne.setDisplayedValues(values);
         numberCarne.setMinValue(1);
         numberCarne.setMaxValue(20);
+
+        AppApplication app = (AppApplication) getApplication();
+        app.valor = 30;
     }
 
     public void buttonNextClick(View view) {
