@@ -12,8 +12,6 @@ import br.gov.sc.ciasc.churrasco.dto.ChurrascoDto;
 
 public class PessoaActivity extends Activity {
 
-    private ChurrascoDto dto;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,18 +22,18 @@ public class PessoaActivity extends Activity {
         numberPessoa.setMinValue(1);
         numberPessoa.setMaxValue(20);
 
-        Bundle params = getIntent().getExtras();
-        if (params != null) {
-            dto = (ChurrascoDto) params.get("DADOS");
-        }
     }
 
     public void buttonNextClick(View view) {
         Intent irParaResultado = new Intent(this, ResultadoActivity.class);
         NumberPicker np = (NumberPicker) findViewById(R.id.numberPessoa);
         Log.d("PessoaActivity", String.valueOf(np.getValue()));
-        dto.setPessoa(np.getValue());
-        irParaResultado.putExtra("DADOS", dto);
+        Bundle params = getIntent().getExtras();
+        if (params != null) {
+            ChurrascoDto dto = (ChurrascoDto) params.get("DADOS");
+            dto.setPessoa(np.getValue());
+            irParaResultado.putExtra("DADOS", dto);
+        }
         startActivity(irParaResultado);
     }
 }

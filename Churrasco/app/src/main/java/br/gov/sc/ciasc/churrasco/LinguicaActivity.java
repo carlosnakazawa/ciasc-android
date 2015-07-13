@@ -15,8 +15,6 @@ import br.gov.sc.ciasc.churrasco.dto.ChurrascoDto;
 
 public class LinguicaActivity extends Activity {
 
-    private ChurrascoDto dto;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,19 +24,18 @@ public class LinguicaActivity extends Activity {
 
         numberLinguica.setMinValue(1);
         numberLinguica.setMaxValue(10);
-
-        Bundle params = getIntent().getExtras();
-        if (params != null) {
-            dto = (ChurrascoDto) params.get("DADOS");
-        }
     }
 
     public void buttonNextClick(View view) {
         Intent irParaRefri = new Intent(this, RefrigeranteActivity.class);
         NumberPicker np = (NumberPicker) findViewById(R.id.numberLinguica);
         Log.d("CarneActivity", String.valueOf(np.getValue()));
-        dto.setLinguica(np.getValue());
-        irParaRefri.putExtra("DADOS", dto);
+        Bundle params = getIntent().getExtras();
+        if (params != null) {
+            ChurrascoDto dto = (ChurrascoDto) params.get("DADOS");
+            dto.setLinguica(np.getValue());
+            irParaRefri.putExtra("DADOS", dto);
+        }
         startActivity(irParaRefri);
     }
 }
