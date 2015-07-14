@@ -17,6 +17,7 @@ public class SplashActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             startActivity(new Intent(SplashActivity.this, CarneActivity.class));
+            finish();
         }
     };
 
