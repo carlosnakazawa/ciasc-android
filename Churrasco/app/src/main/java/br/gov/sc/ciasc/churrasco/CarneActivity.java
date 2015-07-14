@@ -42,13 +42,20 @@ public class CarneActivity extends Activity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add("Configurações").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(new Intent(CarneActivity.this, SettingsActivity.class));
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("Nome", "Carlos");
-        editor.commit();
     }
 
     public void buttonNextClick(View view) {

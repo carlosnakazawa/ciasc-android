@@ -1,17 +1,13 @@
 package br.gov.sc.ciasc.churrasco;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import br.gov.sc.ciasc.churrasco.dto.ChurrascoDto;
@@ -30,7 +26,7 @@ public class LinguicaActivity extends Activity {
         numberLinguica.setMaxValue(10);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String nome = prefs.getString("Nome", "Alberto");
+        String nome = prefs.getString("nome", "Alberto");
         Toast.makeText(this, nome, Toast.LENGTH_LONG).show();
     }
 
