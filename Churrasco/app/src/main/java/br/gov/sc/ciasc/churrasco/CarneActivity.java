@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,7 +45,7 @@ public class CarneActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("Nome", "Carlos");
         editor.commit();
@@ -57,9 +58,6 @@ public class CarneActivity extends Activity {
         ChurrascoDto dto = new ChurrascoDto();
         dto.setCarne(np.getValue() * 50);
         irParaLinguica.putExtra("DADOS", dto);
-
-        String nome = getPreferences(Context.MODE_PRIVATE).getString("Nome", "Alberto");
-        Toast.makeText(this, nome, Toast.LENGTH_LONG).show();
 
         startActivity(irParaLinguica);
     }
