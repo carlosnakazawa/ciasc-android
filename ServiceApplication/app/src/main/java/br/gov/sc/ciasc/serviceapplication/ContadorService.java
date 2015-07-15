@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class ContadorService extends Service implements Runnable {
     private boolean ativo;
-    private int contador;
+    protected int contador;
     private static int MAXIMO = 10;
     private Handler myHandler = new Handler();
 
