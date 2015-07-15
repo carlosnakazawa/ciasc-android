@@ -23,12 +23,19 @@ public class ContadorService extends Service implements Runnable {
         super.onCreate();
         ativo = true;
         contador = 0;
-        myHandler.post(this);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         return conexao;
+    }
+
+    public void iniciarContagem() {
+        myHandler.post(this);
+    }
+
+    public void pararContagem() {
+        ativo = false;
     }
 
     @Override

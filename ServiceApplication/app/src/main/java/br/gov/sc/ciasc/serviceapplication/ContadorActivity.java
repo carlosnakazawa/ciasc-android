@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ public class ContadorActivity extends Activity implements ServiceConnection {
         iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bindService(new Intent(ContadorActivity.this, ContadorService.class), conexao, BIND_AUTO_CREATE);
+                contador.iniciarContagem();
             }
         });
 
@@ -36,7 +37,7 @@ public class ContadorActivity extends Activity implements ServiceConnection {
         parar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                unbindService(conexao);
+                contador.pararContagem();
             }
         });
 
@@ -51,13 +52,27 @@ public class ContadorActivity extends Activity implements ServiceConnection {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        bindService(new Intent(ContadorActivity.this, ContadorService.class), this, BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(this);
+    }
+
+    @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
+        Log.d("ContadorActivity", "onServiceConnected");
         ContadorService.LocalBinder localBinder = (ContadorService.LocalBinder) service;
         contador = localBinder.getContador();
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
+        Log.d("ContadorActivity", "onServiceDisconnected");
         contador = null;
 
     }
