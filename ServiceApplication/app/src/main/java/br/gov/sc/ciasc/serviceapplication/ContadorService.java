@@ -2,13 +2,16 @@ package br.gov.sc.ciasc.serviceapplication;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.util.Log;
 
 public class ContadorService extends Service implements Runnable {
     private boolean ativo;
     private int contador;
     private static int MAXIMO = 10;
+    private Handler myHandler = new Handler();
 
     public ContadorService() {
     }
@@ -18,7 +21,7 @@ public class ContadorService extends Service implements Runnable {
         super.onCreate();
         ativo = true;
         contador = 0;
-        new Thread(this).start();
+        myHandler.post(this);
     }
 
     @Override
@@ -28,14 +31,11 @@ public class ContadorService extends Service implements Runnable {
 
     @Override
     public void run() {
-        while(ativo && contador < MAXIMO) {
-            try {
-                Log.d("ContadorService", "Contagem : " + contador);
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if(ativo && contador < MAXIMO) {
+            myHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
+            Log.d("ContadorService", "Contagem : " + contador);
             contador++;
+            return;
         }
         stopSelf();
     }
