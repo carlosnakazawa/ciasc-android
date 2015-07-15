@@ -18,7 +18,7 @@
         </activity>
 
         <service
-            android:name=".ContadorComConexaoService">
+            android:name=".ContadorService">
         </service>
     </application>
 

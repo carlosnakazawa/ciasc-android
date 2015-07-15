@@ -8,11 +8,12 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class ContadorActivity extends Activity implements ServiceConnection {
 
-    private ContadorComConexaoService contadorComConexao;
+    private ContadorService contador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class ContadorActivity extends Activity implements ServiceConnection {
         iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bindService(new Intent(ContadorActivity.this, ContadorComConexaoService.class), conexao, BIND_AUTO_CREATE);
+                bindService(new Intent(ContadorActivity.this, ContadorService.class), conexao, BIND_AUTO_CREATE);
             }
         });
 
@@ -38,17 +39,26 @@ public class ContadorActivity extends Activity implements ServiceConnection {
                 unbindService(conexao);
             }
         });
+
+        Button visualizar = (Button) findViewById(R.id.visualizar);
+        visualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count = contador.getContador();
+                Toast.makeText(ContadorActivity.this, "Contagem: " + count, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-        ContadorComConexaoService.LocalBinder localBinder = (ContadorComConexaoService.LocalBinder) service;
-        contadorComConexao = localBinder.getContador();
+        ContadorService.LocalBinder localBinder = (ContadorService.LocalBinder) service;
+        contador = localBinder.getContador();
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-        contadorComConexao = null;
+        contador = null;
 
     }
 }

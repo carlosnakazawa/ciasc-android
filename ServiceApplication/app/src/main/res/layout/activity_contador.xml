@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/iniciar"
         android:text="Iniciar"
-        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/parar"
         android:layout_alignStart="@+id/parar" />
 
@@ -20,6 +20,14 @@
         android:id="@+id/parar"
         android:text="Parar"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/visualizar"
+        android:text="Visualizar"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

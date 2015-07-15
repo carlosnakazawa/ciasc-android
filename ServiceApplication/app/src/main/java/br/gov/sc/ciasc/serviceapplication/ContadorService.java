@@ -2,6 +2,7 @@ package br.gov.sc.ciasc.serviceapplication;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
@@ -12,6 +13,7 @@ public class ContadorService extends Service implements Runnable {
     protected int contador;
     private static int MAXIMO = 10;
     private Handler myHandler = new Handler();
+    private final IBinder conexao = new LocalBinder();
 
     public ContadorService() {
     }
@@ -26,7 +28,7 @@ public class ContadorService extends Service implements Runnable {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return conexao;
     }
 
     @Override
@@ -45,5 +47,15 @@ public class ContadorService extends Service implements Runnable {
         super.onDestroy();
         Log.d("ContadorService", "onDestroy");
         ativo = false;
+    }
+
+    public int getContador() {
+        return contador;
+    }
+
+    public class LocalBinder extends Binder {
+        public ContadorService getContador() {
+            return ContadorService.this;
+        }
     }
 }
