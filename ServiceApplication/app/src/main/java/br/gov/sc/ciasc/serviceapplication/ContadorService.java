@@ -9,7 +9,6 @@ import android.os.SystemClock;
 import android.util.Log;
 
 public class ContadorService extends Service implements Runnable {
-    private boolean ativo;
     protected int contador;
     private static int MAXIMO = 10;
     private Handler myHandler = new Handler();
@@ -21,7 +20,6 @@ public class ContadorService extends Service implements Runnable {
     @Override
     public void onCreate() {
         super.onCreate();
-        ativo = true;
         contador = 0;
     }
 
@@ -40,7 +38,7 @@ public class ContadorService extends Service implements Runnable {
 
     @Override
     public void run() {
-        if(ativo && contador < MAXIMO) {
+        if(contador < MAXIMO) {
             myHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
             Log.d("ContadorService", "Contagem : " + contador);
             contador++;
@@ -51,7 +49,7 @@ public class ContadorService extends Service implements Runnable {
     public void onDestroy() {
         super.onDestroy();
         Log.d("ContadorService", "onDestroy");
-        ativo = false;
+        pararContagem();
     }
 
     public int getContador() {

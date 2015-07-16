@@ -61,6 +61,7 @@ public class ContadorActivity extends Activity implements ServiceConnection {
     protected void onPause() {
         super.onPause();
         unbindService(this);
+        Log.d("ContadorActivity", "onPause Service");
     }
 
     @Override
