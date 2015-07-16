@@ -35,7 +35,7 @@ public class ContadorService extends Service implements Runnable {
     }
 
     public void pararContagem() {
-        ativo = false;
+        myHandler.removeCallbacks(this);
     }
 
     @Override
@@ -44,9 +44,7 @@ public class ContadorService extends Service implements Runnable {
             myHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
             Log.d("ContadorService", "Contagem : " + contador);
             contador++;
-            return;
         }
-        stopSelf();
     }
 
     @Override
