@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,7 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import br.gov.sc.ciasc.torico.services.TempoService;
 
@@ -21,11 +27,18 @@ import br.gov.sc.ciasc.torico.services.TempoService;
 public class MainActivity extends AppCompatActivity implements ServiceConnection {
 
     TempoService tempoService;
+    Handler atualizaHandler = new AtualizaHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startService(new Intent(this, TempoService.class));
     }
 
     @Override
@@ -79,17 +92,28 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     }
 
     public void buttonZerarClick(View view) {
-
+        tempoService.stop();
     }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         Log.d("MainActivity", "onServiceConnected");
         tempoService = ((TempoService.LocalBinder) service).getTempoService();
+        tempoService.setAtualizaHandler(atualizaHandler);
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
         Log.d("MainActivity", "onServiceDisconnected");
+    }
+
+    public class AtualizaHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            TextView textView = (TextView) findViewById(R.id.textViewTempo);
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTimeInMillis(msg.getData().getLong("Tempo"));
+            textView.setText("" + calendar.get(Calendar.SECOND));
+        }
     }
 }
