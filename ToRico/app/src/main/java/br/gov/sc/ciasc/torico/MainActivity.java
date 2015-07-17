@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import br.gov.sc.ciasc.torico.services.TempoService;
@@ -67,7 +68,18 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     public void buttonIniciarClick(View view) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String salarioBruto = prefs.getString("salario_bruto", "3000");
-        tempoService.start();
+        Button botaoIniciar = (Button) findViewById(R.id.buttonIniciar);
+        if (!tempoService.rodando) {
+            tempoService.start();
+            botaoIniciar.setText(R.string.button_pausar);
+        } else {
+            tempoService.pause();
+            botaoIniciar.setText(R.string.button_iniciar);
+        }
+    }
+
+    public void buttonZerarClick(View view) {
+
     }
 
     @Override

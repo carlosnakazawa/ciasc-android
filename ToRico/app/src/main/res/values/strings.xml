@@ -3,4 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Configurações</string>
+    <string name="button_zerar">Zerar</string>
+    <string name="button_iniciar">Iniciar</string>
+    <string name="button_pausar">Pausar</string>
 </resources>

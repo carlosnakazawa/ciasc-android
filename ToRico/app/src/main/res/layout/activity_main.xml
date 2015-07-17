@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonIniciar"
         android:onClick="buttonIniciarClick"
-        android:text="Iniciar"
+        android:text="@string/button_iniciar"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonZerar"
         android:onClick="buttonZerarClick"
-        android:text="Zerar"
+        android:text="@string/button_zerar"
         android:layout_alignTop="@+id/buttonIniciar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
