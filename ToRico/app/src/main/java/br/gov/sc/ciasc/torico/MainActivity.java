@@ -1,22 +1,44 @@
 package br.gov.sc.ciasc.torico;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import br.gov.sc.ciasc.torico.services.TempoService;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements ServiceConnection {
+
+    TempoService tempoService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        bindService(new Intent(this, TempoService.class), this, BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(this);
+        Log.d("MainActivity", "onPause Service");
     }
 
     @Override
@@ -42,9 +64,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void buttonSettingsClick(View view) {
+    public void buttonIniciarClick(View view) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String salarioBruto = prefs.getString("salario_bruto", "3000");
-        Toast.makeText(this, salarioBruto, Toast.LENGTH_LONG).show();
+        tempoService.start();
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        Log.d("MainActivity", "onServiceConnected");
+        tempoService = ((TempoService.LocalBinder) service).getTempoService();
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        Log.d("MainActivity", "onServiceDisconnected");
     }
 }
