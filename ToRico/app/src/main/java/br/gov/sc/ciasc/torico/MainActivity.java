@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         tempoService = ((TempoService.LocalBinder) service).getTempoService();
         tempoService.setAtualizaHandler(atualizaHandler);
         Button botaoIniciar = (Button) findViewById(R.id.buttonIniciar);
-        if (!tempoService.rodando) {
+        if (tempoService.rodando) {
             botaoIniciar.setText(R.string.button_pausar);
         } else {
             botaoIniciar.setText(R.string.button_iniciar);
