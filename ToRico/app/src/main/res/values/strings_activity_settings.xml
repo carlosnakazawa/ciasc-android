@@ -12,7 +12,7 @@
     </string>
 
     <string name="pref_title_salario_bruto">Salário Bruto</string>
-    <string name="pref_default_salario_bruto">1000</string>
+    <string name="pref_default_salario_bruto">3000</string>
     <string name="pref_summary_salario_bruto">Informe seu salário bruto</string>
 
     <string name="pref_title_horas_mes">Horas trabalhadas por mês</string>

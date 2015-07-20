@@ -79,8 +79,6 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     }
 
     public void buttonIniciarClick(View view) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String salarioBruto = prefs.getString("salario_bruto", "3000");
         Button botaoIniciar = (Button) findViewById(R.id.buttonIniciar);
         if (!tempoService.rodando) {
             tempoService.start();
@@ -100,6 +98,12 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         Log.d("MainActivity", "onServiceConnected");
         tempoService = ((TempoService.LocalBinder) service).getTempoService();
         tempoService.setAtualizaHandler(atualizaHandler);
+        Button botaoIniciar = (Button) findViewById(R.id.buttonIniciar);
+        if (!tempoService.rodando) {
+            botaoIniciar.setText(R.string.button_pausar);
+        } else {
+            botaoIniciar.setText(R.string.button_iniciar);
+        }
     }
 
     @Override
@@ -111,9 +115,10 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         @Override
         public void handleMessage(Message msg) {
             TextView textView = (TextView) findViewById(R.id.textViewTempo);
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTimeInMillis(msg.getData().getLong("Tempo"));
-            textView.setText("" + calendar.get(Calendar.SECOND));
+            textView.setText(msg.getData().getString("TempoFormatado"));
+
+            TextView textView1 = (TextView) findViewById(R.id.textViewValor);
+            textView1.setText(msg.getData().getString("ValorGanho"));
         }
     }
 }

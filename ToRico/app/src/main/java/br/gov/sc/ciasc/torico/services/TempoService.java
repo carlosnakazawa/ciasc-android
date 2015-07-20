@@ -2,12 +2,15 @@ package br.gov.sc.ciasc.torico.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.util.Date;
@@ -61,7 +64,24 @@ public class TempoService extends Service implements Runnable {
         Log.d("TempoService", "Tempo acumulado : " + tempoAcumulado);
         Message msg = new Message();
         Bundle bundle = new Bundle();
+        CharSequence tempoFormatado = DateFormat.format("HH:mm:ss", tempoAcumulado + tempoTrabalhado);
+        Log.d("TempoService", tempoFormatado.toString());
+        bundle.putString("TempoFormatado", tempoFormatado.toString());
         bundle.putLong("Tempo", tempoAcumulado + tempoTrabalhado);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String salarioBruto = prefs.getString("salario_bruto", "3000");
+        String horasMes = prefs.getString("horas_mes", "176");
+        String percentualExtra = prefs.getString("percentual_extra", "50");
+        double valorHora = Double.parseDouble(salarioBruto) / Double.parseDouble(horasMes);
+        Log.d("TempoService", "" + valorHora);
+        double valorHoraComAdicional = valorHora * (1+(Double.parseDouble(percentualExtra)/100));
+        Log.d("TempoService", "" + valorHoraComAdicional);
+        Log.d("TempoService", "" + (tempoAcumulado + tempoTrabalhado));
+        double valorGanho = valorHoraComAdicional * (((double)(tempoAcumulado + tempoTrabalhado))/(1000 * 3600));
+        Log.d("TempoService", "" + valorGanho);
+        bundle.putString("ValorGanho", String.format("R$ %.2f", valorGanho));
+
         msg.setData(bundle);
         atualizaHandler.sendMessage(msg);
     }
