@@ -14,7 +14,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:drawableLeft="@drawable/icon_play"/>
+        android:drawableLeft="@drawable/ic_play"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -24,7 +24,8 @@
         android:text="@string/button_zerar"
         android:layout_alignTop="@+id/buttonIniciar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:drawableLeft="@drawable/ic_zerar"/>
 
     <TextView
         android:layout_width="wrap_content"

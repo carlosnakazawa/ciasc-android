@@ -83,9 +83,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         if (!tempoService.rodando) {
             tempoService.start();
             botaoIniciar.setText(R.string.button_pausar);
+            botaoIniciar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
         } else {
             tempoService.pause();
             botaoIniciar.setText(R.string.button_iniciar);
+            botaoIniciar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
         }
     }
 
@@ -101,8 +103,10 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         Button botaoIniciar = (Button) findViewById(R.id.buttonIniciar);
         if (tempoService.rodando) {
             botaoIniciar.setText(R.string.button_pausar);
+            botaoIniciar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
         } else {
             botaoIniciar.setText(R.string.button_iniciar);
+            botaoIniciar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
         }
     }
 
