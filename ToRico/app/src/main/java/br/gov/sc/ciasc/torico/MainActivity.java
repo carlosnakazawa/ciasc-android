@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         Log.d("MainActivity", "onServiceConnected");
         tempoService = ((TempoService.LocalBinder) service).getTempoService();
         tempoService.setAtualizaHandler(atualizaHandler);
+
         Button botaoIniciar = (Button) findViewById(R.id.buttonIniciar);
         if (tempoService.rodando) {
             botaoIniciar.setText(R.string.button_pausar);
@@ -123,6 +124,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
 
             TextView textView1 = (TextView) findViewById(R.id.textViewValor);
             textView1.setText(msg.getData().getString("ValorGanho"));
+            Button botaoIniciar = (Button) findViewById(R.id.buttonIniciar);
+            if (msg.getData().getBoolean("Zerado")) {
+                botaoIniciar.setText(R.string.button_iniciar);
+                botaoIniciar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
+            }
         }
     }
 }

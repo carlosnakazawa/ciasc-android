@@ -55,6 +55,14 @@ public class TempoService extends Service implements Runnable {
 
     public void stop() {
         myHandler.removeCallbacks(this);
+        rodando = false;
+        Message msg = new Message();
+        Bundle bundle = new Bundle();
+        bundle.putString("TempoFormatado", formatarDuracao(0));
+        bundle.putString("ValorGanho", String.format("R$ %.2f", 0.0));
+        bundle.putBoolean("Zerado", true);
+        msg.setData(bundle);
+        atualizaHandler.sendMessage(msg);
         tempoAcumulado = 0;
         tempoTrabalhado = 0;
     }
@@ -69,11 +77,9 @@ public class TempoService extends Service implements Runnable {
         Bundle bundle = new Bundle();
 
         long tempoEmMillis = tempoAcumulado + tempoTrabalhado;
-        String tempoFormatado = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(tempoEmMillis), TimeUnit.MILLISECONDS.toMinutes(tempoEmMillis) % TimeUnit.HOURS.toMinutes(1),
-                TimeUnit.MILLISECONDS.toSeconds(tempoEmMillis) % TimeUnit.MINUTES.toSeconds(1));
+        String tempoFormatado = formatarDuracao(tempoEmMillis);
         Log.d("TempoService", tempoFormatado);
         bundle.putString("TempoFormatado", tempoFormatado);
-        bundle.putLong("Tempo", tempoEmMillis);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String salarioBruto = prefs.getString("salario_bruto", "3000");
@@ -100,5 +106,10 @@ public class TempoService extends Service implements Runnable {
 
     public void setAtualizaHandler(Handler handler) {
         this.atualizaHandler = handler;
+    }
+
+    public String formatarDuracao(long tempoEmMillis) {
+        return String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(tempoEmMillis), TimeUnit.MILLISECONDS.toMinutes(tempoEmMillis) % TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.MILLISECONDS.toSeconds(tempoEmMillis) % TimeUnit.MINUTES.toSeconds(1));
     }
 }
