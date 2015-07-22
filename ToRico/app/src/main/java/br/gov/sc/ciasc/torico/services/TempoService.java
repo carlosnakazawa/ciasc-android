@@ -10,10 +10,13 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.text.format.DateFormat;
 import android.util.Log;
 
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class TempoService extends Service implements Runnable {
 
@@ -64,10 +67,13 @@ public class TempoService extends Service implements Runnable {
         Log.d("TempoService", "Tempo acumulado : " + tempoAcumulado);
         Message msg = new Message();
         Bundle bundle = new Bundle();
-        CharSequence tempoFormatado = DateFormat.format("HH:mm:ss", tempoAcumulado + tempoTrabalhado);
-        Log.d("TempoService", tempoFormatado.toString());
-        bundle.putString("TempoFormatado", tempoFormatado.toString());
-        bundle.putLong("Tempo", tempoAcumulado + tempoTrabalhado);
+
+        long tempoEmMillis = tempoAcumulado + tempoTrabalhado;
+        String tempoFormatado = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(tempoEmMillis), TimeUnit.MILLISECONDS.toMinutes(tempoEmMillis) % TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.MILLISECONDS.toSeconds(tempoEmMillis) % TimeUnit.MINUTES.toSeconds(1));
+        Log.d("TempoService", tempoFormatado);
+        bundle.putString("TempoFormatado", tempoFormatado);
+        bundle.putLong("Tempo", tempoEmMillis);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String salarioBruto = prefs.getString("salario_bruto", "3000");
