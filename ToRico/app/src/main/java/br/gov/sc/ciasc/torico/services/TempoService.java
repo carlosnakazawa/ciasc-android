@@ -12,10 +12,6 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class TempoService extends Service implements Runnable {
@@ -39,6 +35,12 @@ public class TempoService extends Service implements Runnable {
     @Override
     public IBinder onBind(Intent intent) {
         return conexao;
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        this.atualizaHandler = null;
+        return super.onUnbind(intent);
     }
 
     public void start() {
@@ -73,29 +75,31 @@ public class TempoService extends Service implements Runnable {
         tempoTrabalhado = (System.nanoTime() - marcadorTempo) / 1000000;
         Log.d("TempoService", "Tempo trabalhado: " + tempoTrabalhado);
         Log.d("TempoService", "Tempo acumulado : " + tempoAcumulado);
-        Message msg = new Message();
-        Bundle bundle = new Bundle();
+        if (atualizaHandler != null) {
+            Message msg = new Message();
+            Bundle bundle = new Bundle();
 
-        long tempoEmMillis = tempoAcumulado + tempoTrabalhado;
-        String tempoFormatado = formatarDuracao(tempoEmMillis);
-        Log.d("TempoService", tempoFormatado);
-        bundle.putString("TempoFormatado", tempoFormatado);
+            long tempoEmMillis = tempoAcumulado + tempoTrabalhado;
+            String tempoFormatado = formatarDuracao(tempoEmMillis);
+            Log.d("TempoService", tempoFormatado);
+            bundle.putString("TempoFormatado", tempoFormatado);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String salarioBruto = prefs.getString("salario_bruto", "3000");
-        String horasMes = prefs.getString("horas_mes", "176");
-        String percentualExtra = prefs.getString("percentual_extra", "50");
-        double valorHora = Double.parseDouble(salarioBruto) / Double.parseDouble(horasMes);
-        Log.d("TempoService", "" + valorHora);
-        double valorHoraComAdicional = valorHora * (1+(Double.parseDouble(percentualExtra)/100));
-        Log.d("TempoService", "" + valorHoraComAdicional);
-        Log.d("TempoService", "" + (tempoAcumulado + tempoTrabalhado));
-        double valorGanho = valorHoraComAdicional * (((double)(tempoAcumulado + tempoTrabalhado))/(1000 * 3600));
-        Log.d("TempoService", "" + valorGanho);
-        bundle.putString("ValorGanho", String.format("R$ %.2f", valorGanho));
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            String salarioBruto = prefs.getString("salario_bruto", "3000");
+            String horasMes = prefs.getString("horas_mes", "176");
+            String percentualExtra = prefs.getString("percentual_extra", "50");
+            double valorHora = Double.parseDouble(salarioBruto) / Double.parseDouble(horasMes);
+            Log.d("TempoService", "" + valorHora);
+            double valorHoraComAdicional = valorHora * (1 + (Double.parseDouble(percentualExtra) / 100));
+            Log.d("TempoService", "" + valorHoraComAdicional);
+            Log.d("TempoService", "" + (tempoAcumulado + tempoTrabalhado));
+            double valorGanho = valorHoraComAdicional * (((double) (tempoAcumulado + tempoTrabalhado)) / (1000 * 3600));
+            Log.d("TempoService", "" + valorGanho);
+            bundle.putString("ValorGanho", String.format("R$ %.2f", valorGanho));
 
-        msg.setData(bundle);
-        atualizaHandler.sendMessage(msg);
+            msg.setData(bundle);
+            atualizaHandler.sendMessage(msg);
+        }
     }
 
     public class LocalBinder extends Binder {
