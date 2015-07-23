@@ -1,5 +1,8 @@
 package br.gov.sc.ciasc.torico.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +16,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
+
+import br.gov.sc.ciasc.torico.MainActivity;
+import br.gov.sc.ciasc.torico.R;
 
 public class TempoService extends Service implements Runnable {
 
@@ -99,6 +105,30 @@ public class TempoService extends Service implements Runnable {
 
             msg.setData(bundle);
             atualizaHandler.sendMessage(msg);
+        } else {
+            PendingIntent p = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            String salarioBruto = prefs.getString("salario_bruto", "3000");
+            String horasMes = prefs.getString("horas_mes", "176");
+            String percentualExtra = prefs.getString("percentual_extra", "50");
+            double valorHora = Double.parseDouble(salarioBruto) / Double.parseDouble(horasMes);
+            Log.d("TempoService", "" + valorHora);
+            double valorHoraComAdicional = valorHora * (1 + (Double.parseDouble(percentualExtra) / 100));
+            Log.d("TempoService", "" + valorHoraComAdicional);
+            Log.d("TempoService", "" + (tempoAcumulado + tempoTrabalhado));
+            double valorGanho = valorHoraComAdicional * (((double) (tempoAcumulado + tempoTrabalhado)) / (1000 * 3600));
+            Log.d("TempoService", "" + valorGanho);
+            Notification n = new Notification.Builder(this)
+                    .setTicker("Valor ganho")
+                    .setContentTitle("Tô Rico")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentText(String.format("R$ %.2f", valorGanho))
+                    .setContentIntent(p)
+                    .setAutoCancel(true)
+                    .setWhen(System.currentTimeMillis())
+                    .build();
+            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            nm.notify(R.string.app_name, n);
         }
     }
 

@@ -1,5 +1,6 @@
 package br.gov.sc.ciasc.torico;
 
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         super.onResume();
 
         bindService(new Intent(this, TempoService.class), this, BIND_AUTO_CREATE);
+
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        nm.cancel(R.string.app_name);
     }
 
     @Override
