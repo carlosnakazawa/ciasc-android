@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         String titulo = "Ricardo";
         String mensagem = "Exemplo de notificação";
 
-        PendingIntent p = PendingIntent.getActivity(this, 0, new Intent(this, ExecutaNotificacaoActivity.class), 0);
+        PendingIntent p = PendingIntent.getBroadcast(this, 0, new Intent("ACAO_BROADCAST"), 0);
         Notification n = new Notification.Builder(this)
                 .setTicker(tickerText)
                 .setContentTitle(titulo)

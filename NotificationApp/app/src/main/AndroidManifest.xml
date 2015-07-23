@@ -20,6 +20,12 @@
             android:name=".ExecutaNotificacaoActivity"
             android:label="@string/title_activity_executa_notificacao" >
         </activity>
+        <receiver android:name="MeuReceiver">
+            <intent-filter>
+                <action android:name="ACAO_BROADCAST" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
