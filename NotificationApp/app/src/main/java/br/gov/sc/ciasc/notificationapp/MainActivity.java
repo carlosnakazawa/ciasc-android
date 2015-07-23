@@ -1,6 +1,7 @@
 package br.gov.sc.ciasc.notificationapp;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -36,7 +37,23 @@ public class MainActivity extends Activity {
 
         TextView textView = new TextView(this);
         textView.setText("Notificação criada...");
+
+        // AlarManager
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent("ACAO_BROADCAST"), 0);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 10000, pendingIntent);
+
         setContentView(textView);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Intent intent = new Intent("ALARME");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+    }
 }
