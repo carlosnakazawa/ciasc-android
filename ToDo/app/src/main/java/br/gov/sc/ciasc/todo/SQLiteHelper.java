@@ -18,11 +18,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        for(String script : scriptSQLCreate) {
+            db.execSQL(script);
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL(scriptSQLDelete);
+        onCreate(db);
     }
 }

@@ -18,8 +18,8 @@ public class TarefaDao {
 
     public TarefaDao(Context context) {
         String[] scriptsCriacao = new String[] {
-                "CREATE DATABASE tarefas;",
-                "CREATE TABLE tarefa (_id integer primary key autoincrement, titulo text not null, descricao text);"
+                "CREATE TABLE tarefa (_id integer primary key autoincrement, titulo text not null, descricao text);",
+                "INSERT INTO tarefa (titulo, descricao) values ('teste', 'Descricao Teste');"
         };
         dbHelper = new SQLiteHelper(context, "tarefas", 1, scriptsCriacao, "DROP database tarefas;");
 
@@ -27,7 +27,7 @@ public class TarefaDao {
     }
 
     public List<Tarefa> findAll() {
-        Cursor cursor = db.query("tarefa", new String[]{"tarefa"}, "", new String[0], null, null, null);
+        Cursor cursor = db.query("tarefa", new String[]{"_id", "titulo", "descricao"}, "", new String[0], null, null, null);
         List<Tarefa> retorno = new ArrayList<Tarefa>();
         while (cursor.moveToNext()) {
             Tarefa tarefa = new Tarefa();
