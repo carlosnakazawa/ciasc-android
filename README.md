@@ -1,7 +1,7 @@
 # Curso Android #
 
 * IDE: [Android Studio](https://developer.android.com/sdk/index.html)
-* Instrutor: Ricardo Longa
+* Instrutor: [Ricardo Longa](https://github.com/ricardolonga)
 
 ### Aulas ###
 
@@ -18,6 +18,14 @@
  * [Handler](http://goo.gl/Gueo2O)
 * 15/07/2015
  * [Service](http://goo.gl/y32x8u)
+* 22/07/2015
+ * [AlarmManager](http://slides.com/ricardolonga/alarmmanager#/)
+ * [Broadcast Receiver](http://slides.com/ricardolonga/broadcastreceiver#/)
+ * [Notification](http://slides.com/ricardolonga/notification#/)
+* 28/07/2015
+ * [SQLite](http://slides.com/ricardolonga/sqlite#/)
+ * [App To Do](http://slides.com/ricardolonga/todo#/)
+
 
 ### Grupo ###
 
