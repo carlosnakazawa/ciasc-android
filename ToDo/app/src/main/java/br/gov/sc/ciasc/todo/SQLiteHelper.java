@@ -8,9 +8,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     private String[] scriptSQLCreate;
     private String scriptSQLDelete;
+    private static final  String NOME_DB = "tarefas";
 
-    public SQLiteHelper(Context context, String nomeBanco, int versaoBanco, String[] scriptSQLCreate, String scriptSQLDelete) {
-        super(context, nomeBanco, null, versaoBanco);
+    public SQLiteHelper(Context context, int versaoBanco, String[] scriptSQLCreate, String scriptSQLDelete) {
+        super(context, NOME_DB, null, versaoBanco);
 
         this.scriptSQLCreate = scriptSQLCreate;
         this.scriptSQLDelete = scriptSQLDelete;

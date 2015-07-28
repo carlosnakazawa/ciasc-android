@@ -3,6 +3,7 @@ package br.gov.sc.ciasc.todo;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -13,15 +14,19 @@ import java.util.ListIterator;
 
 public class TarefaDao {
 
+    public static final String TABELA = "tarefa";
+    public static final String SCRIPT_CREATE = String.format("CREATE TABLE %s (%s integer primary key autoincrement, %s text not null, %s text);",
+            TABELA, TarefaColumns._ID, TarefaColumns.TITULO, TarefaColumns.DESCRICAO);
+    public static final String SCRIPT_DROP = String.format("DROP database %s;", TABELA);
+
     private SQLiteHelper dbHelper;
     private SQLiteDatabase db;
 
     public TarefaDao(Context context) {
         String[] scriptsCriacao = new String[] {
-                "CREATE TABLE tarefa (_id integer primary key autoincrement, titulo text not null, descricao text);",
-                "INSERT INTO tarefa (titulo, descricao) values ('teste', 'Descricao Teste');"
+                SCRIPT_CREATE
         };
-        dbHelper = new SQLiteHelper(context, "tarefas", 1, scriptsCriacao, "DROP database tarefas;");
+        dbHelper = new SQLiteHelper(context, 1, scriptsCriacao, SCRIPT_DROP);
 
         db = dbHelper.getWritableDatabase();
     }
@@ -36,6 +41,16 @@ public class TarefaDao {
             retorno.add(tarefa);
         }
         return retorno;
+    }
+
+    public static final class TarefaColumns implements BaseColumns {
+        private TarefaColumns() {}
+
+        //public static final String DEFAULT_SORT_ORDER = "_id ASC";
+
+        public static final String TITULO = "titulo";
+        public static final String DESCRICAO = "descricao";
+        public static final String DATA_DO_ALARME = "dataalarme";
     }
 }
 
