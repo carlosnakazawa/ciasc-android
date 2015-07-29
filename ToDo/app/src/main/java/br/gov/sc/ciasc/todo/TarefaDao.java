@@ -15,8 +15,8 @@ import java.util.ListIterator;
 public class TarefaDao {
 
     public static final String TABELA = "tarefa";
-    public static final String SCRIPT_CREATE = String.format("CREATE TABLE %s (%s integer primary key autoincrement, %s text not null, %s text);",
-            TABELA, TarefaColumns._ID, TarefaColumns.TITULO, TarefaColumns.DESCRICAO);
+    public static final String SCRIPT_CREATE = String.format("CREATE TABLE %s (%s integer primary key autoincrement, %s text not null, %s text, %s INTEGER NOT NULL);",
+            TABELA, TarefaColumns._ID, TarefaColumns.TITULO, TarefaColumns.DESCRICAO, TarefaColumns.DATA_DO_ALARME);
     public static final String SCRIPT_DROP = String.format("DROP database %s;", TABELA);
 
     private SQLiteHelper dbHelper;
@@ -24,7 +24,8 @@ public class TarefaDao {
 
     public TarefaDao(Context context) {
         String[] scriptsCriacao = new String[] {
-                SCRIPT_CREATE
+                SCRIPT_CREATE,
+                "INSERT INTO tarefa(titulo, descricao, dataalarme) VALUES('Tarefa Exemplo', 'descricao exemplo', 2130183212);"
         };
         dbHelper = new SQLiteHelper(context, 1, scriptsCriacao, SCRIPT_DROP);
 
@@ -38,9 +39,20 @@ public class TarefaDao {
             Tarefa tarefa = new Tarefa();
             tarefa.id = cursor.getLong(cursor.getColumnIndex("_id"));
             tarefa.titulo = cursor.getString(cursor.getColumnIndex("titulo"));
+            tarefa.descricao = cursor.getString(cursor.getColumnIndex("descricao"));
             retorno.add(tarefa);
         }
         return retorno;
+    }
+
+    public void fechar() {
+        if (db != null) {
+            db.close();
+        }
+
+        if (dbHelper != null) {
+            dbHelper.close();
+        }
     }
 
     public static final class TarefaColumns implements BaseColumns {

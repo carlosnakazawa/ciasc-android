@@ -18,21 +18,22 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    TarefaDao dao;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        dao = new TarefaDao(this);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TarefaDao dao = new TarefaDao(this);
 
-        //List<Tarefa> listaTarefas = dao.findAll();
-
-        //ListaTarefasAdapter adapter = new ListaTarefasAdapter(this, listaTarefas);
+        List<Tarefa> listaTarefas = dao.findAll();
+        dao.fechar();
 
         ListView listView = (ListView) findViewById(R.id.listaTarefas);
-        //listView.setAdapter(adapter);
+        listView.setAdapter(new ListaTarefasAdapter(this, listaTarefas));
     }
 
     public class ListaTarefasAdapter extends BaseAdapter {
@@ -64,14 +65,14 @@ public class MainActivity extends Activity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.tarefa_item, parent, false);
+            View view = inflater.inflate(R.layout.tarefa_item, null);
             TextView textViewTitulo = (TextView) view.findViewById(R.id.textViewTitulo);
 
             TextView textViewDescricao = (TextView) view.findViewById(R.id.textViewDescricao);
-            Tarefa tarefa = (Tarefa) getItem(position);
+            Tarefa tarefa = listaTarefas.get(position);
             textViewTitulo.setText(tarefa.titulo);
             textViewDescricao.setText(tarefa.descricao);
-            return convertView;
+            return view;
         }
     }
 }
