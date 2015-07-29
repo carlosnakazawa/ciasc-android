@@ -40,7 +40,7 @@ public class ListaTarefasAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.tarefa_item, null);
         TextView textViewTitulo = (TextView) view.findViewById(R.id.textViewTitulo);
-
+        
         TextView textViewDescricao = (TextView) view.findViewById(R.id.textViewDescricao);
         Tarefa tarefa = listaTarefas.get(position);
         textViewTitulo.setText(tarefa.titulo);

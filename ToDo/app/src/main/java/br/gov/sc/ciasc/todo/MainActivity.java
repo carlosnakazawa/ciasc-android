@@ -3,6 +3,7 @@ package br.gov.sc.ciasc.todo;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -31,4 +32,7 @@ public class MainActivity extends Activity {
         new AsyncTarefaDao(this).execute();
     }
 
+    public void addButtonClick(View view) {
+        startActivityForResult(new Intent(this, AddTaskActivity.class), 1);
+    }
 }
