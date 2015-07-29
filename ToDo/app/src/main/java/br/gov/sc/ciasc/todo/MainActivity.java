@@ -1,7 +1,9 @@
 package br.gov.sc.ciasc.todo;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,13 +29,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        TarefaDao dao = new TarefaDao(this);
-
-        List<Tarefa> listaTarefas = dao.findAll();
-        dao.fechar();
-
-        ListView listView = (ListView) findViewById(R.id.listaTarefas);
-        listView.setAdapter(new ListaTarefasAdapter(this, listaTarefas));
+        new AsyncTarefaDao().execute();
     }
 
     public class ListaTarefasAdapter extends BaseAdapter {
@@ -75,5 +71,38 @@ public class MainActivity extends Activity {
             return view;
         }
     }
-}
 
+    public class AsyncTarefaDao extends AsyncTask<Void, Void, List<Tarefa>> {
+
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(MainActivity.this, "...", "Buscando dados de tarefas");
+
+        }
+
+        @Override
+        protected List<Tarefa> doInBackground(Void... params) {
+            TarefaDao dao = new TarefaDao(MainActivity.this);
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            List<Tarefa> listaTarefas = dao.findAll();
+            dao.fechar();
+            return listaTarefas;
+        }
+
+        @Override
+        protected void onPostExecute(List<Tarefa> tarefas) {
+            super.onPostExecute(tarefas);
+            ListView listView = (ListView) findViewById(R.id.listaTarefas);
+            listView.setAdapter(new ListaTarefasAdapter(MainActivity.this, tarefas));
+            progressDialog.dismiss();
+        }
+    }
+}
