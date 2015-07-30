@@ -5,13 +5,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.androidannotations.annotations.EActivity;
 
+import de.greenrobot.event.EventBus;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
+@EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        Crouton.makeText(this, "Teste", Style.CONFIRM).show();
     }
 
     @Override
