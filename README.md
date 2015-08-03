@@ -22,10 +22,14 @@
  * [AlarmManager](http://slides.com/ricardolonga/alarmmanager#/)
  * [Broadcast Receiver](http://slides.com/ricardolonga/broadcastreceiver#/)
  * [Notification](http://slides.com/ricardolonga/notification#/)
-* 28/07/2015
+* 27/07/2015
  * [SQLite](http://slides.com/ricardolonga/sqlite#/)
  * [App To Do](http://slides.com/ricardolonga/todo#/)
-
+* 29/07/2015
+ * Frameworks
+* 03/08/2015
+ * Framework Retrofit
+ * [Testes](http://slides.com/ricardolonga/testing)
 
 ### Grupo ###
 
