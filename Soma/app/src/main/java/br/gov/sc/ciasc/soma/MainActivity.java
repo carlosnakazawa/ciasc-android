@@ -24,7 +24,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void somar(View view) {
-        int resultado = 2;
+        int numeroA = (Integer.parseInt(valorA.getText().toString()));
+        int numeroB = (Integer.parseInt(valorB.getText().toString()));
+        int resultado = numeroA + numeroB;
         Toast.makeText(this, "" + resultado, Toast.LENGTH_SHORT).show();
     }
 
