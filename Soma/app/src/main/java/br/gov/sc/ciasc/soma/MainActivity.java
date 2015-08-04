@@ -11,23 +11,27 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
-    EditText valorA;
-    EditText valorB;
+    EditTextValidacao valorA;
+    EditTextValidacao valorB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        valorA = (EditText) findViewById(R.id.primeiro);
-        valorB = (EditText) findViewById(R.id.segundo);
+        valorA = (EditTextValidacao) findViewById(R.id.primeiro);
+        valorB = (EditTextValidacao) findViewById(R.id.segundo);
     }
 
     public void somar(View view) {
-        int numeroA = (Integer.parseInt(valorA.getText().toString()));
-        int numeroB = (Integer.parseInt(valorB.getText().toString()));
-        int resultado = numeroA + numeroB;
-        Toast.makeText(this, "" + resultado, Toast.LENGTH_SHORT).show();
+        if (valorA.isValid() && valorB.isValid()) {
+            int numeroA = (Integer.parseInt(valorA.getText().toString()));
+            int numeroB = (Integer.parseInt(valorB.getText().toString()));
+            int resultado = numeroA + numeroB;
+            Toast.makeText(this, "" + resultado, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Valores invalidos", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
